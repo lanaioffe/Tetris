@@ -1,6 +1,9 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
+#include <cstdlib>
+#include <stdio.h>
+#include <time.h>
 #include "Tetris.h"
 
 using namespace std;
@@ -10,23 +13,29 @@ enum Colors {
     RED = 1,
     GREEN = 2,
     BLUE = 3,
-    };
+};
 
-class Figure {
 
+class Figure 
+{
     protected:
         Tetris * tetris;
         int x, y;       //top left
         int color;
+        int state;
 
     public:
-        Figure(Tetris *t, int col){
+        Figure(Tetris *t, int col)
+        {
+            srand(time(NULL)); 
             tetris = t;
             //x = (tetris->getWinWidth()-2-getFigureWidth())/2;
             x = (tetris->getWinWidth()-2-2)/2;
             y = 5;
-            color = col;         
+            color = col;    
+            state = rand() % 4;  
 //            mvwprintw(win, 0, 0, "w:%d h:%d", figureHeight, figureWidth);
+//            mvwprintw(tetris->getWindow(), 0, 0, "state: %d", state);
         }
 
         virtual ~Figure() = default;
@@ -36,24 +45,51 @@ class Figure {
         virtual void draw() = 0;
         virtual void clear() = 0;
         
-        virtual void down() = 0;
-        virtual void rotate() = 0;
-        
-        void moveRight(){ 
-            if (x < tetris->getWinWidth()-3){
+        void moveRight()
+        { 
+            if (x + getFigureWidth() < tetris->getWinWidth()-1){
                 clear();
                 x++;
                 draw();
             }
         }
 
-        void moveLeft(){
+        void moveLeft()
+        {
             if (x > 1){
                 clear();
                 x--;
                 draw();
             }
         }
+
+        void down()
+        {
+            if (y + getFigureHeight() < tetris->getWinHeight() - 1){
+                clear();
+                y++;
+                draw();
+            }
+        }
+
+        bool canRotate()
+        {
+            if( (x + getFigureHeight()*2 < tetris->getWinWidth()) 
+                && (y + getFigureWidth()/2 < tetris->getWinHeight())){
+                return true;
+            }
+            return false;
+        }
+
+        void rotate()
+        {
+            if(canRotate()){
+                clear();
+                state = (state + 1) % 4;
+                draw();
+            }
+        }
+
 
 };
 

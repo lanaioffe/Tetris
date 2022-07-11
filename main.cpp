@@ -38,10 +38,12 @@ int main(void)
 
     Figure *figure = new Stick(tetris);
 
-    while(! quit) {
+    while(! quit) 
+    {
         int ch = wgetch(tetris->getWindow());         // return pushed btn
         
-        switch(ch) {
+        switch(ch) 
+        {
             case KEY_RIGHT:
             case 'a':
                 figure->moveRight();
@@ -55,6 +57,10 @@ int main(void)
             case KEY_DOWN:
             case 'x':
                 figure->down();
+                break;
+
+            case ' ':
+                figure->rotate();
                 break;
 
             case 'q':
