@@ -4,8 +4,8 @@
 
 int Stick::getFigureHeight() 
 {
-    switch (state){
-        
+    switch (state)
+    {
     case 0:
     case 2:
         return 4;
@@ -21,8 +21,8 @@ int Stick::getFigureHeight()
 
 int Stick::getFigureWidth() 
 { 
-    switch (state){
-        
+    switch (state)
+    {    
     case 0:
     case 2:
         return 2;
@@ -38,11 +38,12 @@ int Stick::getFigureWidth()
 
 void Stick::draw()
 {
-    switch (state){
-    
+    switch (state)
+    {
     case 0:
     case 2:
-        for (int i=0; i<4; i++) {     
+        for (int i=0; i<4; i++) 
+        {     
             wattron(tetris->getWindow(), COLOR_PAIR(color));     
             mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); 
             mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
@@ -52,7 +53,8 @@ void Stick::draw()
    
     case 1:
     case 3:
-        for (int i=0; i<8; i++) {     
+        for (int i=0; i<8; i++) 
+        {     
             wattron(tetris->getWindow(), COLOR_PAIR(color));     
             mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); 
             wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
@@ -60,7 +62,8 @@ void Stick::draw()
         break;
     
     default:
-        for (int i=0; i<4; i++) {     
+        for (int i=0; i<4; i++) 
+        {     
             wattron(tetris->getWindow(), COLOR_PAIR(color));     
             mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); 
             mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
@@ -72,11 +75,12 @@ void Stick::draw()
 
 void Stick::clear()
 {
-    switch (state){
-    
+    switch (state)
+    {
     case 0:
     case 2:
-        for (int i=0; i<4; i++) {          
+        for (int i=0; i<4; i++) 
+        {          
             mvwaddch(tetris->getWindow(), y+i, x, ' '); 
             mvwaddch(tetris->getWindow(), y+i, x+1, ' ');
         }
@@ -84,13 +88,15 @@ void Stick::clear()
     
     case 1:
     case 3:
-        for (int i=0; i<8; i++) {          
+        for (int i=0; i<8; i++) 
+        {          
             mvwaddch(tetris->getWindow(), y, x+i, ' '); 
         }
         break;
    
     default:
-        for (int i=0; i<4; i++) {          
+        for (int i=0; i<4; i++) 
+        {          
             mvwaddch(tetris->getWindow(), y+i, x, ' '); 
             mvwaddch(tetris->getWindow(), y+i, x+1, ' ');
         }

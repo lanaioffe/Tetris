@@ -1,5 +1,5 @@
 # list of all objects which came from all cpp files
-OBJS = main.o Figure.o Stick.o
+OBJS = main.o Figure.o Stick.o Square.o T.o
 
 # main.exe will be created as result
 all: main.exe

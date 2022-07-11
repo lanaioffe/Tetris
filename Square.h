@@ -3,14 +3,14 @@
 using namespace std;
 
 
-class Stick: public Figure 
+class Square: public Figure 
 {
 
     public:
 
-        Stick(Tetris *tetris) : Figure(tetris, CYAN) {}
+        Square(Tetris *tetris) : Figure(tetris, YELLOW) {}
 
-        virtual ~Stick() = default;
+        virtual ~Square() = default;
 
         virtual int getFigureHeight();
         virtual int getFigureWidth();

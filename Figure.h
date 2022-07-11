@@ -2,17 +2,19 @@
 #define FIGURE_H
 
 #include <cstdlib>
-#include <stdio.h>
-#include <time.h>
 #include "Tetris.h"
 
 using namespace std;
 
 
 enum Colors {
-    RED = 1,
-    GREEN = 2,
+    CYAN = 0,
+    YELLOW = 1,
+    MAGENTA = 2,      //grey
     BLUE = 3,
+    WHITE = 4,
+    GREEN = 5,
+    RED = 6,
 };
 
 
@@ -26,8 +28,7 @@ class Figure
 
     public:
         Figure(Tetris *t, int col)
-        {
-            srand(time(NULL)); 
+        { 
             tetris = t;
             //x = (tetris->getWinWidth()-2-getFigureWidth())/2;
             x = (tetris->getWinWidth()-2-2)/2;

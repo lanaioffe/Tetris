@@ -7,15 +7,20 @@
 */
 
 #include <curses.h>
+#include <stdio.h>
+#include <time.h>
 #include "Tetris.h"
 #include "Figure.h"
 #include "Stick.h"
+#include "Square.h"
+#include "T.h"
 
 using namespace std;
 
 
 int main(void)
 {
+    srand(time(NULL));
     initscr();
     noecho();       //do not print pressed btn
     cbreak();	    /* Line buffering disabled. pass on everything */
@@ -26,9 +31,14 @@ int main(void)
     keypad(tetris->getWindow(), TRUE); // ><
 
 	start_color();
-	init_pair(RED, COLOR_RED, COLOR_BLACK);
+	init_pair(CYAN, COLOR_CYAN, COLOR_BLACK);
+	init_pair(YELLOW, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(BLUE, COLOR_BLUE, COLOR_BLACK);	
+    init_pair(WHITE, COLOR_WHITE, COLOR_BLACK);
 	init_pair(GREEN, COLOR_GREEN, COLOR_BLACK);
-	init_pair(BLUE, COLOR_BLUE, COLOR_BLACK);
+    init_pair(RED, COLOR_RED, COLOR_BLACK);
+
 
 	mvwprintw(tetris->getWindow(),1, 7, "NCURSES EXTENDED CHARACTERS");
   
@@ -36,7 +46,7 @@ int main(void)
 
     bool quit = false;
 
-    Figure *figure = new Stick(tetris);
+    Figure *figure = new T(tetris);
 
     while(! quit) 
     {
