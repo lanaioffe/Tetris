@@ -15,7 +15,8 @@ main.exe: $(OBJS)
 	g++ $(OBJS) -lcurses -o $@
 
 main.cpp: Tetris.h Figure.h
-Figure.cpp : Figure.h
+Figure.O : Figure.h
+Tetris.o: Tetris.h
 
 clean:
 	rm -f *.o main.exe

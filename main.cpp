@@ -20,30 +20,25 @@ int main(void)
     cbreak();	    /* Line buffering disabled. pass on everything */
     curs_set(0);    //delete cursor
 
-	WINDOW *w = newwin(winWidth, winHeight,0,0);
-    wborder(w, 0, 0, 0, 0, 0, 0, 0, 0);
-    //wborder(w, '|', '|', '-', '-', '1', '2', '3', '4');
-    // wborder(window, left vertical, right vertical, top horizontal, bottom horizontal, 
-    // top left corner, top right corner, bottom left corner, bottom right corner);
+    Tetris *tetris = new Tetris();
 
-    keypad(w, TRUE); // ><
-
+    keypad(tetris->getWindow(), TRUE); // ><
 
 	start_color();
 	init_pair(RED, COLOR_RED, COLOR_BLACK);
 	init_pair(GREEN, COLOR_GREEN, COLOR_BLACK);
 	init_pair(BLUE, COLOR_BLUE, COLOR_BLACK);
 
-	mvwprintw(w,1, 7, "NCURSES EXTENDED CHARACTERS");
-
-    wrefresh(w);    
+	mvwprintw(tetris->getWindow(),1, 7, "NCURSES EXTENDED CHARACTERS");
+  
+    tetris->refresh();
 
     bool quit = false;
 
-    Figure *figure = new Stick(w);
+    Figure *figure = new Stick(tetris);
 
     while(! quit) {
-        int ch = wgetch(w);         // return pushed btn
+        int ch = wgetch(tetris->getWindow());         // return pushed btn
         
         switch(ch) {
             case KEY_RIGHT:
@@ -71,111 +66,17 @@ int main(void)
 
         figure->draw();
 
-        wrefresh(w);
+        tetris->refresh();
     }
 
     delete figure;
 
-	wrefresh(w);
+	tetris->refresh();
 	    
     endwin();
     return 0;
 }
 
-
-
-#if 0
-int main(void)
-{
-    initscr();
-
-    // resizeterm(int lines, int columns);
-
-	if(has_colors() == FALSE)
-	{	
-        endwin();
-		printf("Your terminal does not support color\n");
-		exit(1);
-	}
-
-	start_color();
-	init_pair(RED_BLOCK, COLOR_RED, COLOR_BLACK);
-	init_pair(GRASS, COLOR_GREEN, COLOR_BLACK);
-	init_pair(WATER, COLOR_BLUE, COLOR_BLACK);
-
-    noecho();
-    cbreak();	/* Line buffering disabled. pass on everything */
-    //timeout(500);     // wait 500ms for key press
-    //int nodelay(WINDOW *win, bool bf)
-    curs_set(0);
-
-    int maxx,maxy;
-    getmaxyx(stdscr, maxy, maxx);
-
-    move(0,0);
-
-    refresh();
-
-//  Window main_win(maxy/*height*/, maxx-40/*width*/, 0/*starty*/, 0/*startx*/);
-    Game_Scene main_win(maxy, maxx-40);
-    keypad(main_win.get(), TRUE);
-    main_win.draw_scene();
-    main_win.refresh();
-
-    Window status_win(maxy/*height*/, 40/*width*/, 0/*starty*/, maxx-40/*startx*/);
-    mvwprintw(status_win.get(), 1, 1, "dimy: %d, dimx: %d", maxy, maxx);
-    mvwprintw(status_win.get(), 2, 1, "mainy: %d, mainx: %d", main_win.get_maxy(), main_win.get_maxx());
-    mvwprintw(status_win.get(), 3, 1, "sy: %d, sx: %d", main_win.size_x(), main_win.size_y());
-    status_win.refresh();
-
-    Tank tank(&main_win, 1, 5, DIR_DOWN);
-    tank.draw();
-
-    while(1) {
-        int ch = wgetch(main_win.get());
-        switch(ch) {
-        case KEY_LEFT:
-        case 'a':
-            tank.turn(DIR_LEFT);
-            tank.move();
-            mvwprintw(status_win.get(), 4, 1, "LEFT ");
-            break;
-        case KEY_RIGHT:
-        case 'd':
-            tank.turn(DIR_RIGHT);
-            tank.move();
-            mvwprintw(status_win.get(), 4, 1, "RIGHT");
-            break;
-        case KEY_UP:
-        case 'w':
-            tank.turn(DIR_UP);
-            tank.move();
-            mvwprintw(status_win.get(), 4, 1, "UP   ");
-            break;
-        case KEY_DOWN:
-        case 'x':
-            tank.turn(DIR_DOWN);
-            tank.move();
-            mvwprintw(status_win.get(), 4, 1, "DOWN ");
-            break;
-        case ' ':
-            mvwprintw(status_win.get(), 4, 1, "FIRE ");
-            break;
-        default:
-            break;
-        }
-        main_win.refresh();
-        status_win.refresh();
-    }
-
-    refresh();
-
-    getch();
-    endwin();
-    return 0;
-}
-
-#endif
 
 
 #if 0
