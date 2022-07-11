@@ -9,6 +9,7 @@
 #include <curses.h>
 #include "Tetris.h"
 #include "Figure.h"
+#include "Stick.h"
 
 using namespace std;
 
