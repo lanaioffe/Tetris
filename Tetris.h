@@ -29,9 +29,9 @@ class Tetris
 		};
 
 
-		void refresh() const { wrefresh(w); }
+		void refresh() { wrefresh(w); }
 
-		WINDOW *getWindow() const { return w; }
+		WINDOW *getWindow() { return w; }
 
 		int getWinWidth () const { return winWidth;}
 
