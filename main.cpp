@@ -19,11 +19,13 @@
 #include "Figure_T.h"
 #include "Figure_S.h"
 #include "Figure_Z.h"
+#include "Figure_J.h"
+#include "Figure_L.h"
 
 using namespace std;
 
 Figure * createRandomFigure(Tetris *tetris){
-    int figureType = rand() % 5;
+    int figureType = rand() % 7;
 
     switch(figureType)
     {
@@ -37,6 +39,10 @@ Figure * createRandomFigure(Tetris *tetris){
             return new Figure_S(tetris);
         case 4:
             return new Figure_Z(tetris);
+        case 5:
+            return new Figure_J(tetris);
+        case 6:
+            return new Figure_L(tetris);
     }
 
     assert(0);
