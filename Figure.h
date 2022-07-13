@@ -49,8 +49,7 @@ class Figure
         virtual int getFigureWidth() = 0;
         //virtual void draw() = 0;
         //virtual void clear() = 0;
-        // virtual void drawB(bool draw = true) = 0;
-        // virtual void clearB() = 0;
+
 
 
         void drawB(bool _draw = true)

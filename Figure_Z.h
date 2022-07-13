@@ -16,8 +16,7 @@ class Figure_Z: public Figure
         virtual int getFigureWidth();
         //virtual void draw();
         //virtual void clear();
-        // virtual void drawB(bool draw = true);
-        // virtual void clearB();
+
 
 
     private:

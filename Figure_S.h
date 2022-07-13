@@ -16,8 +16,7 @@ class Figure_S: public Figure
         virtual int getFigureWidth();
         //virtual void draw();
         //virtual void clear();
-        // virtual void drawB(bool draw = true);
-        // virtual void clearB();
+
 
     private:
         static constexpr unsigned int magic [4] = 
