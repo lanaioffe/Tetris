@@ -1,9 +1,9 @@
 #include <curses.h>
 #include <cassert>
-#include "T.h"
+#include "Figure_T.h"
 
 
-int T::getFigureHeight() 
+int Figure_T::getFigureHeight() 
 {
     switch (state)
     {    
@@ -20,7 +20,7 @@ int T::getFigureHeight()
     }
 }
 
-int T::getFigureWidth() 
+int Figure_T::getFigureWidth() 
 { 
     switch (state)
     {        
@@ -37,7 +37,7 @@ int T::getFigureWidth()
     }
 }
 
-void T::draw()
+void Figure_T::draw()
 {
     wattron(tetris->getWindow(), COLOR_PAIR(color)); 
     switch (state){
@@ -86,7 +86,7 @@ void T::draw()
     wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
 }
 
-void T::clear()
+void Figure_T::clear()
 {
     switch (state){
     

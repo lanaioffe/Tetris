@@ -14,9 +14,9 @@
 
 #include "Tetris.h"
 #include "Figure.h"
-#include "Stick.h"
-#include "Square.h"
-#include "T.h"
+#include "Figure_I.h"
+#include "Figure_O.h"
+#include "Figure_T.h"
 
 using namespace std;
 
@@ -26,11 +26,11 @@ Figure * createRandomFigure(Tetris *tetris){
     switch(figureType)
     {
         case 0:
-            return new Stick(tetris);
+            return new Figure_I(tetris);
         case 1:
-            return new Square(tetris);
+            return new Figure_O(tetris);
         case 2:
-            return new T(tetris);
+            return new Figure_T(tetris);
     }
 
     assert(0);

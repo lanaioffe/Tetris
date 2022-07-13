@@ -1,9 +1,9 @@
 #include <curses.h>
 #include <cassert>
-#include "Square.h"
+#include "Figure_O.h"
 
 
-int Square::getFigureHeight() 
+int Figure_O::getFigureHeight() 
 {
     switch (state)
     {    
@@ -18,7 +18,7 @@ int Square::getFigureHeight()
     }
 }
 
-int Square::getFigureWidth() 
+int Figure_O::getFigureWidth() 
 { 
     switch (state)
     {    
@@ -33,7 +33,7 @@ int Square::getFigureWidth()
     }
 }
 
-void Square::draw()
+void Figure_O::draw()
 {
     switch (state)
     {
@@ -55,7 +55,7 @@ void Square::draw()
     }
 }
 
-void Square::clear()
+void Figure_O::clear()
 {
     switch (state)
     {

@@ -1,9 +1,9 @@
 #include <curses.h>
 #include <cassert>
-#include "Stick.h"
+#include "Figure_I.h"
 
 
-int Stick::getFigureHeight() 
+int Figure_I::getFigureHeight() 
 {
     switch (state)
     {
@@ -20,7 +20,7 @@ int Stick::getFigureHeight()
     }
 }
 
-int Stick::getFigureWidth() 
+int Figure_I::getFigureWidth() 
 { 
     switch (state)
     {    
@@ -38,7 +38,7 @@ int Stick::getFigureWidth()
 }
 
 
-void Stick::draw()
+void Figure_I::draw()
 {
     wattron(tetris->getWindow(), COLOR_PAIR(color));   
     switch (state)
@@ -63,10 +63,10 @@ void Stick::draw()
     default:
         assert(0);
     }
-      wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
+    wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
 }
 
-void Stick::clear()
+void Figure_I::clear()
 {
     switch (state)
     {
@@ -94,7 +94,7 @@ void Stick::clear()
 
 /*
 
-void Stick::draw(bool _draw)
+void Figure_I::draw(bool _draw)
 {
     if (_draw)
         wattron(tetris->getWindow(), COLOR_PAIR(color)); 
@@ -119,7 +119,7 @@ void Stick::draw(bool _draw)
         wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
 }
 
-void Stick::clear()
+void Figure_I::clear()
 {
  draw(false);
 }
