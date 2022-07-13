@@ -9,6 +9,9 @@
 #include <curses.h>
 #include <stdio.h>
 #include <time.h>
+#include <windows.h>
+#include <cassert>
+
 #include "Tetris.h"
 #include "Figure.h"
 #include "Stick.h"
@@ -17,6 +20,22 @@
 
 using namespace std;
 
+Figure * createRandomFigure(Tetris *tetris){
+    int figureType = rand() % 3;
+
+    switch(figureType)
+    {
+        case 0:
+            return new Stick(tetris);
+        case 1:
+            return new Square(tetris);
+        case 2:
+            return new T(tetris);
+    }
+
+    assert(0);
+    return nullptr;
+}
 
 int main(void)
 {
@@ -46,7 +65,7 @@ int main(void)
 
     bool quit = false;
 
-    Figure *figure = new T(tetris);
+    Figure *figure = createRandomFigure(tetris);
 
     while(! quit) 
     {
@@ -66,7 +85,14 @@ int main(void)
 
             case KEY_DOWN:
             case 'x':
-                figure->down();
+                while(figure->down()) 
+                {
+                    tetris->refresh();
+                    Sleep(40);
+                }
+
+                delete figure;
+                figure = createRandomFigure(tetris);
                 break;
 
             case ' ':

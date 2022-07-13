@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <cassert>
 #include "Square.h"
 
 
@@ -13,7 +14,7 @@ int Square::getFigureHeight()
         return 2;
     
     default:
-        return 2;
+        assert(0);
     }
 }
 
@@ -28,7 +29,7 @@ int Square::getFigureWidth()
         return 4;
     
     default:
-        return 4;
+        assert(0);
     }
 }
 
@@ -50,14 +51,7 @@ void Square::draw()
         break;
     
     default:
-        for (int i=0; i<4; i++) 
-        {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color));     
-            mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); 
-            mvwaddch(tetris->getWindow(), y+1, x+i, ACS_CKBOARD);
-            wattroff(tetris->getWindow(), COLOR_PAIR(color));
-        }
-        break;
+        assert(0);
     }
 }
 
@@ -77,12 +71,7 @@ void Square::clear()
         break;
    
     default:
-        for (int i=0; i<4; i++) 
-        {        
-            mvwaddch(tetris->getWindow(), y, x+i, ' '); 
-            mvwaddch(tetris->getWindow(), y+1, x+i, ' '); 
-        }
-        break;
+        assert(0);
     }
 }
 

@@ -14,10 +14,12 @@ all: main.exe
 main.exe: $(OBJS)
 	g++ $(OBJS) -lcurses -o $@
 
-main.cpp: Tetris.h Figure.h
+main.o: Tetris.h Figure.h Stick.h Square.h T.h
 Tetris.o: Tetris.h
 Figure.o: Figure.h
 Stick.o: Stick.h
+Square.o: Square.h
+T.o: T.h
 
 clean:
 	rm -f *.o main.exe

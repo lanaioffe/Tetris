@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <cassert>
 #include "T.h"
 
 
@@ -15,7 +16,7 @@ int T::getFigureHeight()
         return 3;
     
     default:
-        return 2;
+        assert(0);
     }
 }
 
@@ -32,122 +33,104 @@ int T::getFigureWidth()
         return 4;
     
     default:
-        return 6;
+        assert(0);
     }
 }
 
 void T::draw()
 {
+    wattron(tetris->getWindow(), COLOR_PAIR(color)); 
     switch (state){
     
     case 0:
-        for (int i=0; i<3; i++) 
+        for (int i=0; i<6; i++) 
         {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color)); 
-            if (i == 1) {mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); }
-            else {mvwaddch(tetris->getWindow(), y, x+i, ' '); }
-            //wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-            //mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            //wattron(tetris->getWindow(), COLOR_PAIR(color));     
+            if (i == 2 || i == 3) {mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); }
             mvwaddch(tetris->getWindow(), y+1, x+i, ACS_CKBOARD); 
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
         }
         break;
     case 1:
         for (int i=0; i<3; i++) 
         {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color)); 
-            mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); 
-            //wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-            //mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            //wattron(tetris->getWindow(), COLOR_PAIR(color));     
-            if (i == 1) {mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD); }
-            else {mvwaddch(tetris->getWindow(), y+i, x+1, ' '); }
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
+            mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD);
+            mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);   
+            if (i == 1) 
+            {
+                mvwaddch(tetris->getWindow(), y+i, x+2, ACS_CKBOARD); 
+                mvwaddch(tetris->getWindow(), y+i, x+3, ACS_CKBOARD); 
+            }
         }
         break;
     case 2:
-        for (int i=0; i<3; i++) 
+        for (int i=0; i<6; i++) 
         {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color)); 
             mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); 
-            //wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-            //mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            //wattron(tetris->getWindow(), COLOR_PAIR(color));     
-            if (i == 1) {mvwaddch(tetris->getWindow(), y+1, x+i, ACS_CKBOARD); }
-            else {mvwaddch(tetris->getWindow(), y+1, x+i, ' '); }
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
+            if (i == 2 || i == 3) {mvwaddch(tetris->getWindow(), y+1, x+i, ACS_CKBOARD); }
         }
         break;
     case 3:
         for (int i=0; i<3; i++) 
         {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color)); 
-            if (i == 1) {mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); }
-            else {mvwaddch(tetris->getWindow(), y+i, x, ' '); }
-            //wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-            //mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            //wattron(tetris->getWindow(), COLOR_PAIR(color));     
-            mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD); 
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
+            if (i == 1) 
+            {
+                mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); 
+                mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD); 
+            }
+            mvwaddch(tetris->getWindow(), y+i, x+2, ACS_CKBOARD);
+            mvwaddch(tetris->getWindow(), y+i, x+3, ACS_CKBOARD);   
         }
         break;
     default:
-        for (int i=0; i<3; i++) 
-        {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color)); 
-            if (i == 1) {mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); }
-            else {mvwaddch(tetris->getWindow(), y, x+i, ' '); }
-            //wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-            //mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            //wattron(tetris->getWindow(), COLOR_PAIR(color));     
-            mvwaddch(tetris->getWindow(), y+1, x+i, ACS_CKBOARD); 
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-        }
-        break;
-    }
+        assert(0);
+    }     
+    wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
 }
 
 void T::clear()
 {
-        switch (state){
+    switch (state){
     
     case 0:
-        for (int i=0; i<3; i++) 
+        for (int i=0; i<6; i++) 
         {     
-            mvwaddch(tetris->getWindow(), y, x+i, ' '); 
+            if (i == 2 || i == 3) {mvwaddch(tetris->getWindow(), y, x+i, ' '); }
             mvwaddch(tetris->getWindow(), y+1, x+i, ' '); 
         }
         break;
     case 1:
         for (int i=0; i<3; i++) 
         {     
-            mvwaddch(tetris->getWindow(), y+i, x, ' '); 
-            mvwaddch(tetris->getWindow(), y+i, x+1, ' ');              
+            mvwaddch(tetris->getWindow(), y+i, x, ' ');
+            mvwaddch(tetris->getWindow(), y+i, x+1, ' ');   
+            if (i == 1) 
+            {
+                mvwaddch(tetris->getWindow(), y+i, x+2, ' '); 
+                mvwaddch(tetris->getWindow(), y+i, x+3, ' '); 
+            }
         }
         break;
     case 2:
-        for (int i=0; i<3; i++) 
+        for (int i=0; i<6; i++) 
         {     
             mvwaddch(tetris->getWindow(), y, x+i, ' '); 
-            mvwaddch(tetris->getWindow(), y+1, x+i, ' ');              
+            if (i == 2 || i == 3) {mvwaddch(tetris->getWindow(), y+1, x+i, ' '); }
         }
         break;
     case 3:
         for (int i=0; i<3; i++) 
         {     
-            mvwaddch(tetris->getWindow(), y+i, x, ' '); 
-            mvwaddch(tetris->getWindow(), y+i, x+1, ' ');     
+            if (i == 1) 
+            {
+                mvwaddch(tetris->getWindow(), y+i, x, ' '); 
+                mvwaddch(tetris->getWindow(), y+i, x+1, ' '); 
+            }
+            mvwaddch(tetris->getWindow(), y+i, x+2, ' ');
+            mvwaddch(tetris->getWindow(), y+i, x+3, ' ');   
         }
         break;
     default:
-        for (int i=0; i<3; i++) 
-        {     
-            mvwaddch(tetris->getWindow(), y, x+i, ' '); 
-            mvwaddch(tetris->getWindow(), y+1, x+i, ' ');  
-        }
-        break;
-    }
+        assert(0);
+    } 
 }
 
 

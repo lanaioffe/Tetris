@@ -43,6 +43,7 @@ class Figure
 
         virtual int getFigureHeight() = 0;
         virtual int getFigureWidth() = 0;
+        //virtual void draw(bool drawme = true) = 0;
         virtual void draw() = 0;
         virtual void clear() = 0;
         
@@ -64,13 +65,15 @@ class Figure
             }
         }
 
-        void down()
+        bool down()
         {
             if (y + getFigureHeight() < tetris->getWinHeight() - 1){
                 clear();
                 y++;
                 draw();
+                return true;
             }
+            return false;
         }
 
         bool canRotate()

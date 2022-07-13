@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <cassert>
 #include "Stick.h"
 
 
@@ -15,7 +16,7 @@ int Stick::getFigureHeight()
         return 1;
     
     default:
-        return 4;
+        assert(0);
     }
 }
 
@@ -32,22 +33,22 @@ int Stick::getFigureWidth()
         return 8;
     
     default:
-        return 2;
+        assert(0);
     }
 }
 
+
 void Stick::draw()
 {
+    wattron(tetris->getWindow(), COLOR_PAIR(color));   
     switch (state)
     {
     case 0:
     case 2:
         for (int i=0; i<4; i++) 
         {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color));     
             mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); 
             mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
         }
         break;
    
@@ -55,22 +56,14 @@ void Stick::draw()
     case 3:
         for (int i=0; i<8; i++) 
         {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color));     
             mvwaddch(tetris->getWindow(), y, x+i, ACS_CKBOARD); 
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
         }
         break;
     
     default:
-        for (int i=0; i<4; i++) 
-        {     
-            wattron(tetris->getWindow(), COLOR_PAIR(color));     
-            mvwaddch(tetris->getWindow(), y+i, x, ACS_CKBOARD); 
-            mvwaddch(tetris->getWindow(), y+i, x+1, ACS_CKBOARD);
-            wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-        }
-        break;
+        assert(0);
     }
+      wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
 }
 
 void Stick::clear()
@@ -80,28 +73,56 @@ void Stick::clear()
     case 0:
     case 2:
         for (int i=0; i<4; i++) 
-        {          
+        {     
             mvwaddch(tetris->getWindow(), y+i, x, ' '); 
             mvwaddch(tetris->getWindow(), y+i, x+1, ' ');
-        }
-        break;
-    
-    case 1:
-    case 3:
-        for (int i=0; i<8; i++) 
-        {          
-            mvwaddch(tetris->getWindow(), y, x+i, ' '); 
         }
         break;
    
-    default:
-        for (int i=0; i<4; i++) 
-        {          
-            mvwaddch(tetris->getWindow(), y+i, x, ' '); 
-            mvwaddch(tetris->getWindow(), y+i, x+1, ' ');
+    case 1:
+    case 3:
+        for (int i=0; i<8; i++) 
+        {     
+            mvwaddch(tetris->getWindow(), y, x+i, ' '); 
         }
         break;
+    
+    default:
+        assert(0);
     }
 }
+
+/*
+
+void Stick::draw(bool _draw)
+{
+    if (_draw)
+        wattron(tetris->getWindow(), COLOR_PAIR(color)); 
+    
+    unsigned int magicState = magic[state];
+
+    int tmp_x = x;
+    int tmp_y = y;
+    unsigned int mask = 0x00000001;
+    for (int i=0;i<32;i++) {
+        if (magicState & mask)
+            mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');
+        tmp_x++;
+        if(i%8 == 7) {
+            tmp_y++;
+            tmp_x = x;
+        }
+        mask <<= 1;
+    }
+
+    if (_draw)
+        wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
+}
+
+void Stick::clear()
+{
+ draw(false);
+}
+*/
 
 
