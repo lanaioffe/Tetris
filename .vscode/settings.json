@@ -9,6 +9,9 @@
         "memory": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "xlocnum": "cpp"
+        "xlocnum": "cpp",
+        "atomic": "cpp",
+        "system_error": "cpp",
+        "vector": "cpp"
     }
 }
