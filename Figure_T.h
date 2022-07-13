@@ -21,7 +21,7 @@ class Figure_T: public Figure
 
 
     private:
-        unsigned int magic [4] = 
+        static constexpr unsigned int magic [4] = 
         {
             0x00003F0C,                     // 00001100
                                             // 00111111
