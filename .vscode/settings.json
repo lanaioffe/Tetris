@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "ios": "cpp",
+        "type_traits": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp",
+        "xiosbase": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "xlocnum": "cpp"
+    }
+}
