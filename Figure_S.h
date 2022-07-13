@@ -8,7 +8,7 @@ class Figure_S: public Figure
 
     public:
 
-        Figure_S(Tetris *tetris) : Figure(tetris, GREEN) {}
+        Figure_S(Tetris *tetris) : Figure(tetris, GREEN, magic) {}
 
         virtual ~Figure_S() = default;
 
@@ -16,8 +16,8 @@ class Figure_S: public Figure
         virtual int getFigureWidth();
         //virtual void draw();
         //virtual void clear();
-        virtual void drawB(bool draw = true);
-        virtual void clearB();
+        // virtual void drawB(bool draw = true);
+        // virtual void clearB();
 
     private:
         static constexpr unsigned int magic [4] = 

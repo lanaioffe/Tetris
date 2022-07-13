@@ -81,6 +81,8 @@ int main(void)
     
     while(! quit) 
     {
+        figure->drawB();
+        tetris->refresh();
         
         int ch = wgetch(tetris->getWindow());         // return pushed btn
         
@@ -119,10 +121,6 @@ int main(void)
             default:
                 break;
         }
-
-
-        figure->drawB();
-        tetris->refresh();
     }
 
     delete figure;

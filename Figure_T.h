@@ -8,7 +8,7 @@ class Figure_T: public Figure
 
     public:
 
-        Figure_T(Tetris *tetris) : Figure(tetris, MAGENTA) {}
+        Figure_T(Tetris *tetris) : Figure(tetris, MAGENTA, magic) {}
 
         virtual ~Figure_T() = default;
 
@@ -16,8 +16,8 @@ class Figure_T: public Figure
         virtual int getFigureWidth();
         //virtual void draw();
         //virtual void clear();
-        virtual void drawB(bool draw = true);
-        virtual void clearB();
+        // virtual void drawB(bool draw = true);
+        // virtual void clearB();
 
 
     private:
