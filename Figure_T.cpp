@@ -37,6 +37,7 @@ int Figure_T::getFigureWidth()
     }
 }
 
+/*
 void Figure_T::draw()
 {
     wattron(tetris->getWindow(), COLOR_PAIR(color)); 
@@ -132,5 +133,4 @@ void Figure_T::clear()
         assert(0);
     } 
 }
-
-
+*/

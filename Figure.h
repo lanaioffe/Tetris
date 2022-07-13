@@ -25,16 +25,20 @@ class Figure
         int x, y;       //top left
         int color;
         int state;
+        unsigned int magic [4];
 
     public:
-        Figure(Tetris *t, int col)
+        Figure(Tetris *t, int col, unsigned figureMagicNumber [4])
         { 
             tetris = t;
-            //x = (tetris->getWinWidth()-2-getFigureWidth())/2;
             x = (tetris->getWinWidth()-2-2)/2;
             y = 5;
             color = col;    
             state = rand() % 4;  
+            for (int i=0; i<4; i++)
+            {            
+                magic[i] = figureMagicNumber[i];
+            }
 //            mvwprintw(win, 0, 0, "w:%d h:%d", figureHeight, figureWidth);
 //            mvwprintw(tetris->getWindow(), 0, 0, "state: %d", state);
         }
@@ -43,34 +47,70 @@ class Figure
 
         virtual int getFigureHeight() = 0;
         virtual int getFigureWidth() = 0;
-        //virtual void draw(bool drawme = true) = 0;
-        virtual void draw() = 0;
-        virtual void clear() = 0;
-        
+        //virtual void draw() = 0;
+        //virtual void clear() = 0;
+
+
+
+        void drawB(bool _draw = true)
+        {
+            if (_draw) { wattron(tetris->getWindow(), COLOR_PAIR(color)); }
+            
+            unsigned int magicState = magic[state];
+
+            int tmp_x = x;
+            int tmp_y = y;
+            unsigned int mask = 0x00000001;
+
+            for (int i=0;i<32;i++) {
+            
+                if (magicState & mask)
+                {
+                    mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');
+                }
+
+                tmp_x++;
+                mask <<= 1;
+
+                if(i%8 == 7) 
+                {
+                    tmp_y++;
+                    tmp_x = x;
+                }
+            }
+
+            if (_draw) { wattroff(tetris->getWindow(), COLOR_PAIR(color)); }
+        }
+
+        void clearB()
+        {
+            drawB(false);
+        }
+
         void moveRight()
         { 
             if (x + getFigureWidth() < tetris->getWinWidth()-1){
-                clear();
+                clearB();
                 x++;
-                draw();
+                drawB();
             }
         }
 
         void moveLeft()
         {
             if (x > 1){
-                clear();
+                clearB();
                 x--;
-                draw();
+                drawB();
             }
         }
 
         bool down()
         {
             if (y + getFigureHeight() < tetris->getWinHeight() - 1){
-                clear();
+                clearB();
                 y++;
-                draw();
+                drawB();
                 return true;
             }
             return false;
@@ -88,9 +128,9 @@ class Figure
         void rotate()
         {
             if(canRotate()){
-                clear();
+                clearB();
                 state = (state + 1) % 4;
-                draw();
+                drawB();
             }
         }
 

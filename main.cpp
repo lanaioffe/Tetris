@@ -78,9 +78,10 @@ int main(void)
     bool quit = false;
 
     Figure *figure = createRandomFigure(tetris);
-
+    
     while(! quit) 
     {
+        
         int ch = wgetch(tetris->getWindow());         // return pushed btn
         
         switch(ch) 
@@ -100,7 +101,7 @@ int main(void)
                 while(figure->down()) 
                 {
                     tetris->refresh();
-                    Sleep(40);
+                    Sleep(20);
                 }
 
                 delete figure;
@@ -119,8 +120,8 @@ int main(void)
                 break;
         }
 
-        figure->draw();
 
+        figure->drawB();
         tetris->refresh();
     }
 

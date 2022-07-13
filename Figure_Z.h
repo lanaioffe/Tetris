@@ -8,16 +8,39 @@ class Figure_Z: public Figure
 
     public:
 
-        Figure_Z(Tetris *tetris) : Figure(tetris, RED) {}
+        Figure_Z(Tetris *tetris) : Figure(tetris, RED, magic) {}
 
         virtual ~Figure_Z() = default;
 
         virtual int getFigureHeight();
         virtual int getFigureWidth();
-        virtual void draw();
-        virtual void clear();
+        //virtual void draw();
+        //virtual void clear();
+
 
     private:
-        unsigned int magic [4];
+        unsigned int magic [4] = 
+        {
+            0x00000F3C,                     // 00111100
+                                            // 00001111
+                                            // 00000000
+                                            // 00000000
+                                            
+            0x000C0F03,                     // 00000011
+                                            // 00001111
+                                            // 00001100
+                                            // 00000000
+                                            
+            0x00000F3C,                     // 00111100
+                                            // 00001111
+                                            // 00000000
+                                            // 00000000
+
+            0x000C0F03,                     // 00000011
+                                            // 00001111
+                                            // 00001100
+                                            // 00000000
+                                              
+        };
 
 };

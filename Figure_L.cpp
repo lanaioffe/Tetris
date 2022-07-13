@@ -37,7 +37,7 @@ int Figure_L::getFigureWidth()
     }
 }
 
-
+/*
 void Figure_L::draw()
 {
     wattron(tetris->getWindow(), COLOR_PAIR(color));   
@@ -137,38 +137,7 @@ void Figure_L::clear()
         assert(0);
     }
 }
-
-/*
-
-void Figure_L::draw(bool _draw)
-{
-    if (_draw)
-        wattron(tetris->getWindow(), COLOR_PAIR(color)); 
-    
-    unsigned int magicState = magic[state];
-
-    int tmp_x = x;
-    int tmp_y = y;
-    unsigned int mask = 0x00000001;
-    for (int i=0;i<32;i++) {
-        if (magicState & mask)
-            mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');
-        tmp_x++;
-        if(i%8 == 7) {
-            tmp_y++;
-            tmp_x = x;
-        }
-        mask <<= 1;
-    }
-
-    if (_draw)
-        wattroff(tetris->getWindow(), COLOR_PAIR(color)); 
-}
-
-void Figure_L::clear()
-{
- draw(false);
-}
 */
+
 
 

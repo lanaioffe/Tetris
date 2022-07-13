@@ -33,6 +33,7 @@ int Figure_O::getFigureWidth()
     }
 }
 
+/*
 void Figure_O::draw()
 {
     switch (state)
@@ -74,5 +75,6 @@ void Figure_O::clear()
         assert(0);
     }
 }
+*/
 
 
