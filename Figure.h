@@ -25,20 +25,20 @@ class Figure
         int x, y;       //top left
         int color;
         int state;
-        unsigned int magic [4];
+        //unsigned int magicNumber [4];
 
     public:
-        Figure(Tetris *t, int col, unsigned figureMagicNumber [4])
+        Figure(Tetris *t, int col /*unsigned int figureMagicNumber [4]*/)
         { 
             tetris = t;
             x = (tetris->getWinWidth()-2-2)/2;
             y = 5;
             color = col;    
             state = rand() % 4;  
-            for (int i=0; i<4; i++)
-            {            
-                magic[i] = figureMagicNumber[i];
-            }
+            // for (int i=0; i<4; i++)
+            // {            
+            //     magicNumber[i] = figureMagicNumber[i];
+            // }
 //            mvwprintw(win, 0, 0, "w:%d h:%d", figureHeight, figureWidth);
 //            mvwprintw(tetris->getWindow(), 0, 0, "state: %d", state);
         }
@@ -49,43 +49,45 @@ class Figure
         virtual int getFigureWidth() = 0;
         //virtual void draw() = 0;
         //virtual void clear() = 0;
+        virtual void drawB(bool draw = true) = 0;
+        virtual void clearB() = 0;
 
 
-
-        void drawB(bool _draw = true)
-        {
-            if (_draw) { wattron(tetris->getWindow(), COLOR_PAIR(color)); }
+        // void drawB(bool _draw = true)
+        // {
+        //     mvwprintw(tetris->getWindow(), 0, 0, "state: %d number: %d", state, magicNumber);
+        //     if (_draw) { wattron(tetris->getWindow(), COLOR_PAIR(color)); }
             
-            unsigned int magicState = magic[state];
+        //     unsigned int magicState = magicNumber[state];
 
-            int tmp_x = x;
-            int tmp_y = y;
-            unsigned int mask = 0x00000001;
+        //     int tmp_x = x;
+        //     int tmp_y = y;
+        //     unsigned int mask = 0x00000001;
 
-            for (int i=0;i<32;i++) {
+        //     for (int i=0;i<32;i++) {
             
-                if (magicState & mask)
-                {
-                    mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');
-                }
+        //         if (magicState & mask)
+        //         {
+        //             mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');
+        //         }
 
-                tmp_x++;
-                mask <<= 1;
+        //         tmp_x++;
+        //         mask <<= 1;
 
-                if(i%8 == 7) 
-                {
-                    tmp_y++;
-                    tmp_x = x;
-                }
-            }
+        //         if(i%8 == 7) 
+        //         {
+        //             tmp_y++;
+        //             tmp_x = x;
+        //         }
+        //     }
 
-            if (_draw) { wattroff(tetris->getWindow(), COLOR_PAIR(color)); }
-        }
+        //     if (_draw) { wattroff(tetris->getWindow(), COLOR_PAIR(color)); }
+        // }
 
-        void clearB()
-        {
-            drawB(false);
-        }
+        // void clearB()
+        // {
+        //     drawB(false);
+        // }
 
         void moveRight()
         { 
