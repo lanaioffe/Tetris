@@ -12,7 +12,8 @@
         "xlocnum": "cpp",
         "atomic": "cpp",
         "system_error": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "cstdint": "cpp"
     },
     "files.exclude": {
         "**.exe": true,

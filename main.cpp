@@ -73,7 +73,7 @@ int main(void)
     init_pair(RED, COLOR_RED, COLOR_BLACK);
 
 
-	mvwprintw(tetris->getWindow(),1, 7, "NCURSES EXTENDED CHARACTERS");
+	mvwprintw(tetris->getWindow(),1, 20, "TETRIS GAME");
   
     tetris->refresh();
 
@@ -105,9 +105,10 @@ int main(void)
                 while(figure->down()) 
                 {
                     tetris->refresh();
-                    Sleep(20);
+                    Sleep(15);
                 }
 
+                figure->putFigure();
                 delete figure;
                 figure = createRandomFigure(tetris);
                 break;
