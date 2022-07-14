@@ -59,10 +59,6 @@ int main(void)
     cbreak();	    /* Line buffering disabled. pass on everything */
     curs_set(0);    //delete cursor
 
-    Tetris *tetris = new Tetris();
-
-    keypad(tetris->getWindow(), TRUE); // ><
-
 	start_color();
 	init_pair(CYAN, COLOR_CYAN, COLOR_BLACK);
 	init_pair(YELLOW, COLOR_YELLOW, COLOR_BLACK);
@@ -73,6 +69,11 @@ int main(void)
     init_pair(RED, COLOR_RED, COLOR_BLACK);
 
 
+    Tetris *tetris = new Tetris();
+
+    keypad(tetris->getWindow(), TRUE); // ><
+    nodelay(tetris->getWindow(), TRUE); //делает чтобы wgetch не ждал кнопки
+
 	mvwprintw(tetris->getWindow(),1, 20, "TETRIS GAME");
   
     tetris->refresh();
@@ -81,6 +82,8 @@ int main(void)
 
     Figure *figure = createRandomFigure(tetris);
     
+    unsigned tick = 0;
+
     while(! quit) 
     {
         figure->drawB();
@@ -124,6 +127,13 @@ int main(void)
             default:
                 break;
         }
+        
+        tick++;
+       
+        Sleep(50);
+
+        if (tick % 8 == 0)
+            figure->down();
     }
 
     delete figure;
