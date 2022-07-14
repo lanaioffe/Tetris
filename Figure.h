@@ -154,15 +154,15 @@ class Figure
         }
 
 
-        bool canMove(int win_x, int win_y)
+        bool canMove(int win_x, int win_y, int moveState)
         {
             //create masks from figure magic number by state and row 
             //using shift for deleting extra 0 from the begining
             //for comparing row by row on coordinates of window
-            uint64_t row_mask0 = magicNumber[state] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
-            uint64_t row_mask1 = (magicNumber[state] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
-            uint64_t row_mask2 = (magicNumber[state] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
-            uint64_t row_mask3 = (magicNumber[state] & 0xFF000000) >> 24;           // 11111111 00000000 00000000 00000000
+            uint64_t row_mask0 = magicNumber[moveState] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
+            uint64_t row_mask1 = (magicNumber[moveState] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
+            uint64_t row_mask2 = (magicNumber[moveState] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
+            uint64_t row_mask3 = (magicNumber[moveState] & 0xFF000000) >> 24;           // 11111111 00000000 00000000 00000000
 
             //compare rows from window with masks (accordingly row by row)
             //if at least one of them return true - there is a collision
@@ -194,7 +194,7 @@ class Figure
 
         void moveRight()
         { 
-            if (canMove(x+2, y) & (x + getFigureWidth() < tetris->getWinWidth()-1))
+            if ( (x + getFigureWidth() < tetris->getWinWidth()-1) && canMove(x+2, y, state) )
             {
                 clearB();
                 x+=2;
@@ -205,7 +205,7 @@ class Figure
 
         void moveLeft()
         {
-            if (canMove(x-2, y) & (x > 1))
+            if ( (x > 1) && canMove(x-2, y, state) )
             {
                 clearB();
                 x-=2;
@@ -216,7 +216,7 @@ class Figure
 
         bool down()
         {
-            if (canMove(x, y+1) & (y + getFigureHeight() < tetris->getWinHeight() - 1))
+            if ( canMove(x, y+1, state) )
             {
                 clearB();
                 y++;
@@ -231,7 +231,7 @@ class Figure
         bool canRotate()
         {
             if( (x + getFigureHeight()*2 < tetris->getWinWidth()) 
-                && (y + getFigureWidth()/2 < tetris->getWinHeight()))
+                 && canMove(x, y, (state+1)% 4) )
             {
                 return true;
             }

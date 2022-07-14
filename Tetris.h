@@ -19,9 +19,9 @@ class Tetris
 		
 		Tetris() 
 		{	
-			for(int i=0; i<50; i++) 
+			for(int i=0; i<53; i++) 
 			{
-				if(i >= 50) {glass[i] = 1;}
+				if(i >= 49) {glass[i] = uint64_t(-1);}
 				else {glass[i] = 0;}
 			}
 			w = newwin(winWidth, winHeight, 0, 0);
