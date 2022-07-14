@@ -13,5 +13,9 @@
         "atomic": "cpp",
         "system_error": "cpp",
         "vector": "cpp"
+    },
+    "files.exclude": {
+        "**.exe": true,
+        "**.o": true
     }
 }

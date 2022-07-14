@@ -54,7 +54,6 @@ class Figure
 
         void drawB(bool _draw = true)
         {
-            mvwprintw(tetris->getWindow(), 0, 0, "state: %d number: %d", state, magicNumber);
             if (_draw) { wattron(tetris->getWindow(), COLOR_PAIR(color)); }
             
             unsigned int magicState = magicNumber[state];
@@ -63,12 +62,9 @@ class Figure
             int tmp_y = y;
             unsigned int mask = 0x00000001;
 
-            for (int i=0;i<32;i++) {
-            
-                if (magicState & mask)
-                {
-                    mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');
-                }
+            for (int i=0;i<32;i++) 
+            {
+                if (magicState & mask) {mvwaddch(tetris->getWindow(), tmp_y, tmp_x, _draw ? ACS_CKBOARD : ' ');}
 
                 tmp_x++;
                 mask <<= 1;
@@ -79,7 +75,6 @@ class Figure
                     tmp_x = x;
                 }
             }
-
             if (_draw) { wattroff(tetris->getWindow(), COLOR_PAIR(color)); }
         }
 
@@ -120,7 +115,8 @@ class Figure
         bool canRotate()
         {
             if( (x + getFigureHeight()*2 < tetris->getWinWidth()) 
-                && (y + getFigureWidth()/2 < tetris->getWinHeight())){
+                && (y + getFigureWidth()/2 < tetris->getWinHeight()))
+            {
                 return true;
             }
             return false;
@@ -128,7 +124,8 @@ class Figure
 
         void rotate()
         {
-            if(canRotate()){
+            if(canRotate())
+            {
                 clearB();
                 state = (state + 1) % 4;
                 drawB();
