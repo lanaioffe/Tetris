@@ -12,8 +12,8 @@ class Figure_T: public Figure
 
         virtual ~Figure_T() = default;
 
-        virtual int getFigureHeight();
-        virtual int getFigureWidth();
+        // virtual int getFigureHeight();
+        // virtual int getFigureWidth();
         //virtual void draw();
         //virtual void clear();
 

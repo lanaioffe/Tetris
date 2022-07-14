@@ -45,12 +45,78 @@ class Figure
 
         virtual ~Figure() = default;
 
-        virtual int getFigureHeight() = 0;
-        virtual int getFigureWidth() = 0;
+        // virtual int getFigureHeight() = 0;
+        // virtual int getFigureWidth() = 0;
         //virtual void draw() = 0;
         //virtual void clear() = 0;
 
 
+        int getFigureHeight() 
+        {
+            int height = 0;
+            unsigned int mask = 0x80000000;             // 00000000
+                                                        // 00000000
+                                                        // 00000000
+                                                        // 10000000
+
+            unsigned int magicState = magicNumber[state];
+            int tmp_x = x+7;
+            int tmp_y = y+3;
+
+            for (int i=0; i<32; i++)
+            {
+                if(magicState & mask)
+                {
+                    height = tmp_y - y + 1;
+                    //mvwprintw(tetris->getWindow(), 0, 0, "height: %d state: %d", height, state);
+                    return height;
+                }
+                mask >>= 1;
+                tmp_x --;
+
+                if (i%8 == 7)
+                {
+                    tmp_y --;
+                    tmp_x = x+7;
+                }
+            }
+            return height;
+        }
+
+        int getFigureWidth() 
+        {
+            int width = 0;
+            int tmpW = 0;
+            unsigned int mask = 0x80000000;             // 00000000
+                                                        // 00000000
+                                                        // 00000000
+                                                        // 10000000
+
+            unsigned int magicState = magicNumber[state];
+            int tmp_x = x+7;
+            int tmp_y = y+3;
+
+            for (int i=0; i<32; i++)
+            {
+                if(magicState & mask)
+                {
+                    tmpW = tmp_x - x + 1;
+                    //mvwprintw(tetris->getWindow(), 0, 0, "width: %d tmpW: %d state: %d", width, tmpW, state);
+
+                    if (tmpW == 8) {return tmpW;}                       //max width
+                    if (width < tmpW) { width = tmpW;}                 
+                }
+                mask >>= 1;
+                tmp_x --;
+                
+                if (i%8 == 7)
+                {
+                    tmp_y --;
+                    tmp_x = x+7;
+                }
+            }
+            return width;
+        }
 
         void drawB(bool _draw = true)
         {

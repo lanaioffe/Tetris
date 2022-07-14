@@ -3,39 +3,39 @@
 #include "Figure_T.h"
 
 
-int Figure_T::getFigureHeight() 
-{
-    switch (state)
-    {    
-    case 0:
-    case 2:
-        return 2;
+// int Figure_T::getFigureHeight() 
+// {
+//     switch (state)
+//     {    
+//     case 0:
+//     case 2:
+//         return 2;
     
-    case 1:
-    case 3:
-        return 3;
+//     case 1:
+//     case 3:
+//         return 3;
     
-    default:
-        assert(0);
-    }
-}
+//     default:
+//         assert(0);
+//     }
+// }
 
-int Figure_T::getFigureWidth() 
-{ 
-    switch (state)
-    {        
-    case 0:
-    case 2:
-        return 6;
+// int Figure_T::getFigureWidth() 
+// { 
+//     switch (state)
+//     {        
+//     case 0:
+//     case 2:
+//         return 6;
     
-    case 1:
-    case 3:
-        return 4;
+//     case 1:
+//     case 3:
+//         return 4;
     
-    default:
-        assert(0);
-    }
-}
+//     default:
+//         assert(0);
+//     }
+// }
 
 /*
 void Figure_T::draw()

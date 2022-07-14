@@ -3,35 +3,35 @@
 #include "Figure_O.h"
 
 
-int Figure_O::getFigureHeight() 
-{
-    switch (state)
-    {    
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-        return 2;
+// int Figure_O::getFigureHeight() 
+// {
+//     switch (state)
+//     {    
+//     case 0:
+//     case 1:
+//     case 2:
+//     case 3:
+//         return 2;
     
-    default:
-        assert(0);
-    }
-}
+//     default:
+//         assert(0);
+//     }
+// }
 
-int Figure_O::getFigureWidth() 
-{ 
-    switch (state)
-    {    
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-        return 4;
+// int Figure_O::getFigureWidth() 
+// { 
+//     switch (state)
+//     {    
+//     case 0:
+//     case 1:
+//     case 2:
+//     case 3:
+//         return 4;
     
-    default:
-        assert(0);
-    }
-}
+//     default:
+//         assert(0);
+//     }
+// }
 
 /*
 void Figure_O::draw()
