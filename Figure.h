@@ -166,10 +166,10 @@ class Figure
 
             //compare rows from window with masks (accordingly row by row)
             //if at least one of them return true - there is a collision
-            if ((tetris->glass[win_y] & (row_mask0 << x )) |
-                 (tetris->glass[win_y+1] & (row_mask1 << x)) | 
-                  (tetris->glass[win_y+2] & (row_mask2 << x)) |
-                   (tetris->glass[win_y+3] & (row_mask3 << x)) ) 
+            if ((tetris->glass[win_y] & (row_mask0 << win_x )) |
+                 (tetris->glass[win_y+1] & (row_mask1 << win_x)) | 
+                  (tetris->glass[win_y+2] & (row_mask2 << win_x)) |
+                   (tetris->glass[win_y+3] & (row_mask3 << win_x)) ) 
             {
                 return false;
             }
@@ -194,10 +194,10 @@ class Figure
 
         void moveRight()
         { 
-            if (canMove(x+1, y) & (x + getFigureWidth() < tetris->getWinWidth()-1))
+            if (canMove(x+2, y) & (x + getFigureWidth() < tetris->getWinWidth()-1))
             {
                 clearB();
-                x++;
+                x+=2;
                 drawB();
             }
         }
@@ -205,10 +205,10 @@ class Figure
 
         void moveLeft()
         {
-            if (canMove(x-1, y) & (x > 1))
+            if (canMove(x-2, y) & (x > 1))
             {
                 clearB();
-                x--;
+                x-=2;
                 drawB();
             }
         }
