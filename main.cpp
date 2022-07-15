@@ -111,7 +111,6 @@ int main(void)
                     Sleep(15);
                 }
 
-                figure->putFigure();
                 delete figure;
                 figure = createRandomFigure(tetris);
                 break;

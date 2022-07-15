@@ -189,12 +189,14 @@ class Figure
             tetris->glass[y+1] = (tetris->glass[y+1] | (row_mask1 << x));
             tetris->glass[y+2] = (tetris->glass[y+2] | (row_mask2 << x));
             tetris->glass[y+3] = (tetris->glass[y+3] | (row_mask3 << x));
+ 
         }
 
 
         void moveRight()
         { 
-            if ( (x + getFigureWidth() < tetris->getWinWidth()-1) && canMove(x+2, y, state) )
+            //if ( (x + getFigureWidth() < tetris->getWinWidth()-1) && canMove(x+2, y, state) )
+            if (canMove(x+2, y, state) )
             {
                 clearB();
                 x+=2;
@@ -205,7 +207,8 @@ class Figure
 
         void moveLeft()
         {
-            if ( (x > 1) && canMove(x-2, y, state) )
+            // if ( (x > 1) && canMove(x-2, y, state) )
+            if (canMove(x-2, y, state) )
             {
                 clearB();
                 x-=2;
@@ -224,14 +227,15 @@ class Figure
                 
                 return true;
             }
+            putFigure();
             return false;
         }
 
 
         bool canRotate()
         {
-            if( (x + getFigureHeight()*2 < tetris->getWinWidth()) 
-                 && canMove(x, y, (state+1)% 4) )
+            //if( (x + getFigureHeight()*2 < tetris->getWinWidth()) &&
+            if( canMove(x, y, (state+1)% 4) )
             {
                 return true;
             }
