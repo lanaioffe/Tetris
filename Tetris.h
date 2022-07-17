@@ -45,14 +45,7 @@ class Tetris
 		int getWinHeight () const { return winHeight;}
 
         
-		// //change window with masks of figure 
-		// void putFigure()
-        // {
-		// 	for (int i=0; i<4; i++)
-		// 	{
-		// 		glass[y+i] = (glass[y+i] | (getMaskForRow(i, state) << x ));
-		// 	}
-        // }
+
 
 };
 #endif

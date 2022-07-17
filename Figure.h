@@ -178,8 +178,8 @@ class Figure
         }
 
 
-
-            //for comparing row by row on coordinates of window
+        //for comparing row by row on coordinates of window with masks
+        //if at least one of them return true - there is a collision
         bool canMove(int win_x, int win_y, int moveState)
         {
             // //create masks from figure magic number by state and row 
@@ -192,12 +192,20 @@ class Figure
 
             //compare rows from window with masks (accordingly row by row)
             //if at least one of them return true - there is a collision
-            if ((tetris->glass[win_y] & (getMaskForRow(0, moveState) << win_x )) |
-                 (tetris->glass[win_y+1] & (getMaskForRow(1, moveState) << win_x)) | 
-                  (tetris->glass[win_y+2] & (getMaskForRow(2, moveState) << win_x)) |
-                   (tetris->glass[win_y+3] & (getMaskForRow(3, moveState) << win_x)) ) 
+            // if ((tetris->glass[win_y] & (getMaskForRow(0, moveState) << win_x )) |
+            //      (tetris->glass[win_y+1] & (getMaskForRow(1, moveState) << win_x)) | 
+            //       (tetris->glass[win_y+2] & (getMaskForRow(2, moveState) << win_x)) |
+            //        (tetris->glass[win_y+3] & (getMaskForRow(3, moveState) << win_x)) ) 
+            // {
+            //     return false;
+            // }
+            // return true;
+
+            for (int i=0; i<4; i++)
             {
-                return false;
+                if(tetris->glass[win_y+i] & (getMaskForRow(i, moveState) << win_x)){
+                    return false;
+                }
             }
             return true;
         }
