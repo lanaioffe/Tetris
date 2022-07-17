@@ -74,7 +74,7 @@ int main(void)
     keypad(tetris->getWindow(), TRUE); // ><
     nodelay(tetris->getWindow(), TRUE); //делает чтобы wgetch не ждал кнопки
 
-	mvwprintw(tetris->getWindow(),1, 20, "TETRIS GAME");
+	mvwprintw(tetris->getWindow(),1, 15, "TETRIS GAME");
   
     tetris->refresh();
 
