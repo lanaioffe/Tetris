@@ -12,9 +12,11 @@ class Tetris
 {
 private:
 	WINDOW *w;
+	WINDOW *status;
 	static constexpr int winWidth = 42;
 	static constexpr int winHeight = 42;
 	uint64_t glass[winHeight + 3];
+	int score = 0;
 
 public:
 	Tetris()
@@ -25,19 +27,25 @@ public:
 		for (int i = winHeight - 1; i < winHeight + 3; i++)
 			glass[i] = uint64_t(-1); // all below winHeight-1 set to 1 - bottom border
 
-		w = newwin(winWidth, winHeight, 0, 0);
+		w = newwin(winHeight, winWidth, 0, 0);
 		wborder(w, 0, 0, 0, 0, 0, 0, 0, 0);
 		// wborder(w, '|', '|', '-', '-', '1', '2', '3', '4');
 		//  wborder(window, left vertical, right vertical, top horizontal, bottom horizontal,
 		//  top left corner, top right corner, bottom left corner, bottom right corner);
+
+		status = newwin(winHeight/2, 20, 0, winWidth+3);
+		wborder(status, 0, 0, 0, 0, 0, 0, 0, 0);
 	}
 
 	~Tetris()
 	{
 		delwin(w);
+		delwin(status);
 	};
 
-	void refresh() { wrefresh(w); }
+	void refresh() { 
+		wrefresh(w); wrefresh(status); 
+	}
 
 	WINDOW *getWindow() { return w; }
 
@@ -97,8 +105,9 @@ public:
 		}
 		figure->setColor(WHITE);
 		figure->drawB();
+		score++;
 
-		mvwprintw(w,2,2,"%016llx", glass[winHeight-2]);
+		mvwprintw(status,1,1,"score: %d", score);
 
 		collapse();
 	}
@@ -113,9 +122,11 @@ public:
 				{
 					glass[j] = glass[j-1];
 				}
+				score += winWidth;
+				mvwprintw(status,1,1,"score: %d", score);
+				refreshGlass();
 			}
 		}
-		refreshGlass();
 	}
 
 	void refreshGlass()

@@ -131,8 +131,15 @@ int main(void)
        
         Sleep(20);
 
-        if (tick % 16 == 0)
-            figure->down();
+        if (tick % 16 == 0) 
+        {
+            if(!figure->down())
+            {
+                delete figure;
+                figure = createRandomFigure(tetris);
+            }
+        }
+
     }
 
     delete figure;
