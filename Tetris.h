@@ -8,46 +8,93 @@
 
 using namespace std;
 
-
-class Tetris 
+class Tetris
 {
-	protected:
-		WINDOW *w;
-		static constexpr int winWidth = 42;
-		static constexpr int winHeight = 42;
-		
-	public:
-		uint64_t glass [winHeight+3];
-		
-		Tetris() 
-		{	
+private:
+	WINDOW *w;
+	static constexpr int winWidth = 42;
+	static constexpr int winHeight = 42;
+	uint64_t glass[winHeight + 3];
 
-			for(int i=0; i<winHeight; i++) glass[i] = ~((uint64_t(1) << winWidth)-1) + 1;		//set all outside to 1	
-			for(int i=winHeight-1; i<winHeight+3; i++) glass[i] = uint64_t(-1);					//all below winHeight-1 set to 1 - bottom border
+public:
+	Tetris()
+	{
 
-			w = newwin(winWidth, winHeight, 0, 0);
-        	wborder(w, 0, 0, 0, 0, 0, 0, 0, 0);
-			//wborder(w, '|', '|', '-', '-', '1', '2', '3', '4');
-			// wborder(window, left vertical, right vertical, top horizontal, bottom horizontal, 
-			// top left corner, top right corner, bottom left corner, bottom right corner);
-		}
+		for (int i = 0; i < winHeight; i++)
+			glass[i] = ~((uint64_t(1) << winWidth) - 1) + 1; // set all outside to 1
+		for (int i = winHeight - 1; i < winHeight + 3; i++)
+			glass[i] = uint64_t(-1); // all below winHeight-1 set to 1 - bottom border
 
-		~Tetris() 
+		w = newwin(winWidth, winHeight, 0, 0);
+		wborder(w, 0, 0, 0, 0, 0, 0, 0, 0);
+		// wborder(w, '|', '|', '-', '-', '1', '2', '3', '4');
+		//  wborder(window, left vertical, right vertical, top horizontal, bottom horizontal,
+		//  top left corner, top right corner, bottom left corner, bottom right corner);
+	}
+
+	~Tetris()
+	{
+		delwin(w);
+	};
+
+	void refresh() { wrefresh(w); }
+
+	WINDOW *getWindow() { return w; }
+
+	int getWinWidth() const { return winWidth; }
+
+	int getWinHeight() const { return winHeight; }
+
+	// for comparing row by row on coordinates of window with masks
+	// if at least one of them return true - there is a collision
+	bool canMove(const Figure *figure, int new_x, int new_y, int moveState)
+	{
+		// //create masks from figure magic number by state and row
+		// //using shift for deleting extra 0 from the begining
+		// //for comparing row by row on coordinates of window
+		// uint64_t row_mask0 = magicNumber[moveState] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
+		// uint64_t row_mask1 = (magicNumber[moveState] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
+		// uint64_t row_mask2 = (magicNumber[moveState] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
+		// uint64_t row_mask3 = (magicNumber[moveState] & 0xFF000000) >> 24;           // 11111111 00000000 00000000 00000000
+
+		// compare rows from window with masks (accordingly row by row)
+		// if at least one of them return true - there is a collision
+		//  if ((tetris->glass[new_y] & (getMaskForRow(0, moveState) << new_x )) |
+		//       (tetris->glass[new_y+1] & (getMaskForRow(1, moveState) << new_x)) |
+		//        (tetris->glass[new_y+2] & (getMaskForRow(2, moveState) << new_x)) |
+		//         (tetris->glass[new_y+3] & (getMaskForRow(3, moveState) << new_x)) )
+		//  {
+		//      return false;
+		//  }
+		//  return true;
+
+		for (int i = 0; i < 4; i++)
 		{
-			delwin(w); 
-		};
+			if (glass[new_y + i] & (figure->getMaskForRow(i, moveState) << new_x))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 
+	// change window with masks of figure
+	void putFigure(const Figure *figure)
+	{
+		// uint64_t row_mask0 = magicNumber[state] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
+		// uint64_t row_mask1 = (magicNumber[state] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
+		// uint64_t row_mask2 = (magicNumber[state] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
+		// uint64_t row_mask3 = (magicNumber[state] & 0xFF000000) >> 24;           // 11111111 00000000 00000000 00000000
 
-		void refresh() { wrefresh(w); }
+		// glass[y] = (glass[y] | (getMaskForRow(0, state) << x ));
+		// glass[y+1] = (glass[y+1] | (getMaskForRow(1, state) << x));
+		// glass[y+2] = (glass[y+2] | (getMaskForRow(2, state) << x));
+		// glass[y+3] = (glass[y+3] | (getMaskForRow(3, state) << x));
 
-		WINDOW *getWindow() { return w; }
-
-		int getWinWidth () const { return winWidth;}
-
-		int getWinHeight () const { return winHeight;}
-
-        
-
-
+		for (int i = 0; i < 4; i++)
+		{
+			glass[figure->getY() + i] = (glass[figure->getY() + i] | (figure->getMaskForRow(i, figure->getState()) << figure->getX()));
+		}
+	}
 };
 #endif

@@ -20,7 +20,7 @@ Figure::Figure(Tetris *t, int col, const unsigned figureMagicNumber[4])
 
 // create masks from figure magic number by state and row
 // using shift for deleting extra 0 from the begining
-u_int64_t Figure::getMaskForRow(int row, int moveState)
+u_int64_t Figure::getMaskForRow(int row, int moveState) const
 {
     switch (row)
     {
@@ -81,62 +81,11 @@ void Figure::clearB()
     drawB(false);
 }
 
-// for comparing row by row on coordinates of window with masks
-// if at least one of them return true - there is a collision
-bool Figure::canMove(int win_x, int win_y, int moveState)
-{
-    // //create masks from figure magic number by state and row
-    // //using shift for deleting extra 0 from the begining
-    // //for comparing row by row on coordinates of window
-    // uint64_t row_mask0 = magicNumber[moveState] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
-    // uint64_t row_mask1 = (magicNumber[moveState] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
-    // uint64_t row_mask2 = (magicNumber[moveState] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
-    // uint64_t row_mask3 = (magicNumber[moveState] & 0xFF000000) >> 24;           // 11111111 00000000 00000000 00000000
-
-    // compare rows from window with masks (accordingly row by row)
-    // if at least one of them return true - there is a collision
-    //  if ((tetris->glass[win_y] & (getMaskForRow(0, moveState) << win_x )) |
-    //       (tetris->glass[win_y+1] & (getMaskForRow(1, moveState) << win_x)) |
-    //        (tetris->glass[win_y+2] & (getMaskForRow(2, moveState) << win_x)) |
-    //         (tetris->glass[win_y+3] & (getMaskForRow(3, moveState) << win_x)) )
-    //  {
-    //      return false;
-    //  }
-    //  return true;
-
-    for (int i = 0; i < 4; i++)
-    {
-        if (tetris->glass[win_y + i] & (getMaskForRow(i, moveState) << win_x))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-// change window with masks of figure
-void Figure::putFigure()
-{
-    // uint64_t row_mask0 = magicNumber[state] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
-    // uint64_t row_mask1 = (magicNumber[state] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
-    // uint64_t row_mask2 = (magicNumber[state] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
-    // uint64_t row_mask3 = (magicNumber[state] & 0xFF000000) >> 24;           // 11111111 00000000 00000000 00000000
-
-    // tetris->glass[y] = (tetris->glass[y] | (getMaskForRow(0, state) << x ));
-    // tetris->glass[y+1] = (tetris->glass[y+1] | (getMaskForRow(1, state) << x));
-    // tetris->glass[y+2] = (tetris->glass[y+2] | (getMaskForRow(2, state) << x));
-    // tetris->glass[y+3] = (tetris->glass[y+3] | (getMaskForRow(3, state) << x));
-
-    for (int i = 0; i < 4; i++)
-    {
-        tetris->glass[y + i] = (tetris->glass[y + i] | (getMaskForRow(i, state) << x));
-    }
-}
 
 void Figure::moveRight()
 {
     // if ( (x + getFigureWidth() < tetris->getWinWidth()-1) && canMove(x+2, y, state) )
-    if (canMove(x + 2, y, state))
+    if (tetris->canMove(this, x + 2, y, state))
     {
         clearB();
         x += 2;
@@ -147,7 +96,7 @@ void Figure::moveRight()
 void Figure::moveLeft()
 {
     // if ( (x > 1) && canMove(x-2, y, state) )
-    if (canMove(x - 2, y, state))
+    if (tetris->canMove(this, x - 2, y, state))
     {
         clearB();
         x -= 2;
@@ -157,7 +106,7 @@ void Figure::moveLeft()
 
 bool Figure::down()
 {
-    if (canMove(x, y + 1, state))
+    if (tetris->canMove(this, x, y + 1, state))
     {
         clearB();
         y++;
@@ -165,14 +114,14 @@ bool Figure::down()
 
         return true;
     }
-    putFigure();
+    tetris->putFigure(this) ;
     return false;
 }
 
 bool Figure::canRotate()
 {
     // if( (x + getFigureHeight()*2 < tetris->getWinWidth()) &&
-    if (canMove(x, y, (state + 1) % 4))
+    if (tetris->canMove(this, x, y, (state + 1) % 4))
     {
         return true;
     }

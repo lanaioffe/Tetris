@@ -115,15 +115,8 @@ class Figure
 
         //create masks from figure magic number by state and row 
         //using shift for deleting extra 0 from the begining
-        u_int64_t getMaskForRow(int row, int moveState);
-    
+        u_int64_t getMaskForRow(int row, int moveState) const;
 
-        //for comparing row by row on coordinates of window with masks
-        //if at least one of them return true - there is a collision
-        bool canMove(int win_x, int win_y, int moveState);
-        
-        //change window with masks of figure 
-        void putFigure();
    
         void moveRight();
  
@@ -135,7 +128,10 @@ class Figure
 
         void rotate();
 
+        int getState()const {return state;}
 
+        int getX() const {return x;}
+        int getY() const {return y;}
 
 };
 
