@@ -132,6 +132,7 @@ class Figure
 
         int getX() const {return x;}
         int getY() const {return y;}
+        void setColor(int newColor) {color = newColor;}
 
 };
 

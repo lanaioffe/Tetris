@@ -21,7 +21,7 @@ public:
 	{
 
 		for (int i = 0; i < winHeight; i++)
-			glass[i] = ~((uint64_t(1) << winWidth) - 1) + 1; // set all outside to 1
+			glass[i] = ~((uint64_t(1) << (winWidth-1)) - 1) + 1; // set all outside to 1
 		for (int i = winHeight - 1; i < winHeight + 3; i++)
 			glass[i] = uint64_t(-1); // all below winHeight-1 set to 1 - bottom border
 
@@ -79,8 +79,8 @@ public:
 	}
 
 	// change window with masks of figure
-	void putFigure(const Figure *figure)
-	{
+	void putFigure(Figure *figure)
+	{	
 		// uint64_t row_mask0 = magicNumber[state] & 0x000000FF;                   // 00000000 00000000 00000000 11111111
 		// uint64_t row_mask1 = (magicNumber[state] & 0x0000FF00) >> 8;            // 00000000 00000000 11111111 00000000
 		// uint64_t row_mask2 = (magicNumber[state] & 0x00FF0000) >> 16;           // 00000000 11111111 00000000 00000000
@@ -94,6 +94,48 @@ public:
 		for (int i = 0; i < 4; i++)
 		{
 			glass[figure->getY() + i] = (glass[figure->getY() + i] | (figure->getMaskForRow(i, figure->getState()) << figure->getX()));
+		}
+		figure->setColor(WHITE);
+		figure->drawB();
+
+		mvwprintw(w,2,2,"%016llx", glass[winHeight-2]);
+
+		collapse();
+	}
+
+	void collapse()
+	{
+		for (int i=winHeight-2; i>0; i--)
+		{
+			if(glass[i] == uint64_t(-1) )
+			{
+				for(int j=i; j>0; j--)
+				{
+					glass[j] = glass[j-1];
+				}
+			}
+		}
+		refreshGlass();
+	}
+
+	void refreshGlass()
+	{
+		for(int i=winHeight-2; i>0; i--)
+		{
+			uint64_t mask = 0x0000000000000001ULL << 1;
+			for(int j=1; j<winWidth-1; j++)
+			{
+
+				if (glass[i] & mask)
+				{
+					mvwaddch(getWindow(), i, j, ACS_CKBOARD);
+				}
+				else {
+					mvwaddch(getWindow(), i, j, ' ');
+				}
+				
+				mask <<= 1;
+			}
 		}
 	}
 };
