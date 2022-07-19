@@ -129,9 +129,9 @@ int main(void)
         
         tick++;
        
-        Sleep(50);
+        Sleep(20);
 
-        if (tick % 8 == 0)
+        if (tick % 16 == 0)
             figure->down();
     }
 

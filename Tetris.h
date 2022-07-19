@@ -4,6 +4,8 @@
 #include <ncurses.h>
 #include <cstdint>
 
+#include "Figure.h"
+
 using namespace std;
 
 
