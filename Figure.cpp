@@ -7,7 +7,7 @@ Figure::Figure(Tetris *t, int col, const unsigned figureMagicNumber[4])
 {
     tetris = t;
     x = (tetris->getWinWidth() - 2 - 2) / 2; // find the middle сonsidering figure size/2 and 2 for borders
-    y = 5;
+    y = 3;
     color = col;
     state = rand() % 4;
     for (int i = 0; i < 4; i++)

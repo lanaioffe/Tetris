@@ -13,8 +13,8 @@ class Tetris
 private:
 	WINDOW *w;
 	WINDOW *status;
-	static constexpr int winWidth = 42;
-	static constexpr int winHeight = 42;
+	static constexpr int winWidth = 22;
+	static constexpr int winHeight = 22;
 	uint64_t glass[winHeight + 3];
 	int score = 0;
 
@@ -22,10 +22,7 @@ public:
 	Tetris()
 	{
 
-		for (int i = 0; i < winHeight; i++)
-			glass[i] = ~((uint64_t(1) << (winWidth-1)) - 1) + 1; // set all outside to 1
-		for (int i = winHeight - 1; i < winHeight + 3; i++)
-			glass[i] = uint64_t(-1); // all below winHeight-1 set to 1 - bottom border
+		reset();
 
 		w = newwin(winHeight, winWidth, 0, 0);
 		wborder(w, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -42,6 +39,38 @@ public:
 		delwin(w);
 		delwin(status);
 	};
+
+	void reset()
+	{
+		for (int i = 0; i < winHeight; i++)
+			glass[i] = ~((uint64_t(1) << (winWidth-1)) - 1) + 1; 		// set all outside to 1
+		for (int i = winHeight - 1; i < winHeight + 3; i++)
+			glass[i] = uint64_t(-1); 									// all below winHeight-1 set to 1 - bottom border
+
+		score = 0;
+	}
+
+
+	void endGame()
+	{
+		mvwprintw(status,3,3,"GAME OVER");
+		refresh();
+		while(true)
+		{
+			int ch = wgetch(getWindow());         // return pushed btn
+			if (ch == KEY_ENTER) break; 
+		}
+		reset();
+		refreshGlass();
+		mvwprintw(status,3,3,"         ");
+		printScore();
+		refresh();
+	}
+
+	void printScore() {
+		mvwprintw(status,1,1,"score: %d   ", score);
+	}
+
 
 	void refresh() { 
 		wrefresh(w); wrefresh(status); 
@@ -107,26 +136,35 @@ public:
 		figure->drawB();
 		score++;
 
-		mvwprintw(status,1,1,"score: %d", score);
+		printScore();
 
 		collapse();
 	}
 
 	void collapse()
 	{
-		for (int i=winHeight-2; i>0; i--)
+		bool redo;
+
+	  while(1) {
+		redo= false;
+ 		for (int i=winHeight-2; i>0; i--)
 		{
-			if(glass[i] == uint64_t(-1) )
+			if(glass[i] == uint64_t(-1))
 			{
 				for(int j=i; j>0; j--)
 				{
 					glass[j] = glass[j-1];
 				}
-				score += winWidth;
-				mvwprintw(status,1,1,"score: %d", score);
+				score += 10;
+				printScore();
 				refreshGlass();
+
+				redo = true;
 			}
 		}
+
+		if(redo == false) break;
+	  }
 	}
 
 	void refreshGlass()

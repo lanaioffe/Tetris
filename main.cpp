@@ -27,28 +27,41 @@
 using namespace std;
 
 Figure * createRandomFigure(Tetris *tetris){
+    Figure *next;
     int figureType = rand() % 7;
 
     switch(figureType)
     {
         case 0:
-            return new Figure_I(tetris);
+            next = new Figure_I(tetris);
+            break;
         case 1:
-            return new Figure_O(tetris);
+            next = new Figure_O(tetris);
+            break;
         case 2:
-            return new Figure_T(tetris);
+            next = new Figure_T(tetris);
+            break;
         case 3:
-            return new Figure_S(tetris);
+            next = new Figure_S(tetris);
+            break;
         case 4:
-            return new Figure_Z(tetris);
+            next = new Figure_Z(tetris);
+            break;
         case 5:
-            return new Figure_J(tetris);
+            next = new Figure_J(tetris);
+            break;
         case 6:
-            return new Figure_L(tetris);
+            next = new Figure_L(tetris);
+            break;
     }
 
-    assert(0);
-    return nullptr;
+    if(! tetris->canMove(next, next->getX(), next->getY(), next->getState())) 
+    {
+        tetris->endGame();
+        return next;
+    }
+
+    return next;
 }
 
 int main(void)
@@ -74,7 +87,6 @@ int main(void)
     keypad(tetris->getWindow(), TRUE); // ><
     nodelay(tetris->getWindow(), TRUE); //делает чтобы wgetch не ждал кнопки
 
-	mvwprintw(tetris->getWindow(),1, 15, "TETRIS GAME");
   
     tetris->refresh();
 
@@ -113,6 +125,7 @@ int main(void)
 
                 delete figure;
                 figure = createRandomFigure(tetris);
+
                 break;
 
             case ' ':
@@ -123,6 +136,10 @@ int main(void)
                 quit = true;
                 break;
 
+            case 'p':
+                while(wgetch(tetris->getWindow()) != 'p');
+                break;
+                
             default:
                 break;
         }
